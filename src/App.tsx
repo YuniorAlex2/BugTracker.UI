@@ -1,19 +1,19 @@
-import { useEffect } from "react";
+import { Route, Routes } from "react-router";
+import LoginPage from "./pages/LoginPage";
+import DashboardPage from "./pages/DashboardPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  useEffect(() => {
-    fetch("http://localhost:5256/api/projects")
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then(data => console.log(data))
-      .catch(err => console.error(err));
-  }, []);
-
-  return <h1>Bug Tracker UI</h1>;
+  return (
+   <Routes>
+      <Route path="/" element={
+        <ProtectedRoute>
+          <DashboardPage />
+        </ProtectedRoute>
+        } />
+    <Route path="/login" element={<LoginPage />} />
+   </Routes>
+  );
 }
 
 export default App;
