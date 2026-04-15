@@ -1,11 +1,22 @@
 import { API_BASE_URL } from "./api";
 
+export interface ProjectIssue {
+  id: number;
+  title: string;
+  description: string;
+  status: string;
+  priority: string;
+  createdAt: string;
+  projectId: number;
+}
+
 export interface Project {
   id: number;
   name: string;
   description: string;
   owner: string;
   createdAt: string;
+  issues?: ProjectIssue[];
 }
 
 export interface CreateProjectDto {

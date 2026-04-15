@@ -41,13 +41,14 @@ export const getIssues = async (params?: {
   priority?: string;
   pageNumber?: number;
   pageSize?: number;
-}): Promise<PagedIssuesResponse> => {
+}) => {
   const query = new URLSearchParams();
 
   if (params?.search) query.append("search", params.search);
   if (params?.status) query.append("status", params.status);
   if (params?.priority) query.append("priority", params.priority);
-  if (params?.pageNumber) query.append("pageNumber", params.pageNumber.toString());
+  if (params?.pageNumber)
+    query.append("pageNumber", params.pageNumber.toString());
   if (params?.pageSize) query.append("pageSize", params.pageSize.toString());
 
   const response = await fetch(`${API_BASE_URL}/issues?${query.toString()}`);
@@ -90,7 +91,7 @@ export const createIssue = async (issueData: CreateIssueRequest) => {
 
 export const updateIssue = async (
   id: number,
-  issueData: UpdateIssueRequest
+  issueData: UpdateIssueRequest,
 ) => {
   const token = localStorage.getItem("token");
 
