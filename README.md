@@ -21,16 +21,16 @@ This project demonstrates real-world application architecture, including authent
 
 ### 📁 Project Management
 - Create and list projects
-- Project details page (`/projects/:id`)
+- Project details page (/projects/:id)
 - View issues per project
 - Dynamic issue count per project
 
 ### 🧭 Application Structure
 - Multi-page architecture:
-  - `/dashboard` → overview
-  - `/issues` → issue management
-  - `/projects` → project management
-  - `/projects/:id` → project details
+  - /dashboard → overview
+  - /issues → issue management
+  - /projects → project management
+  - /projects/:id → project details
 - Shared layout with sidebar navigation
 - Reusable components (modals, buttons, layout)
 
@@ -84,8 +84,51 @@ This project demonstrates real-world application architecture, including authent
 
 ### Backend
 
-```bash
+bash
 git clone https://github.com/YuniorAlex2/BugTracker.API
 cd BugTracker.API
 dotnet ef database update
 dotnet run
+
+Frontend
+cd bugtracker-ui
+npm install
+npm run dev
+
+🔗 API Endpoints
+Auth
+POST /api/auth/register
+POST /api/auth/login
+
+Issues
+GET /api/issues
+POST /api/issues
+PUT /api/issues/{id}
+DELETE /api/issues/{id}
+
+Projects
+GET /api/projects
+GET /api/projects/{id}
+GET /api/projects/{id}/issues
+POST /api/projects
+PUT /api/projects/{id}
+DELETE /api/projects/{id}
+
+🎯 Purpose
+
+This project was built to demonstrate:
+
+Real-world backend architecture
+Clean frontend structure with routing
+Full CRUD workflows
+Integration between frontend and backend
+Scalable application design
+
+📌 Next Steps
+Edit/Delete project
+Create issue from project page
+Improve dashboard analytics
+Deployment (frontend + backend)
+
+👨‍💻 Author
+Alex Suero
