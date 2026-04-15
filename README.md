@@ -1,73 +1,91 @@
-# React + TypeScript + Vite
+# 🐞 Bug Tracker (Full Stack Application)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A production-style bug tracking system built with **ASP.NET Core Web API** and **React (TypeScript)**.
 
-Currently, two official plugins are available:
+This project demonstrates real-world application architecture, including authentication, modular frontend structure, and scalable API design.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🔐 Authentication
+- JWT-based authentication (Register & Login)
+- Protected endpoints for secure operations
 
-## Expanding the ESLint configuration
+### 🧩 Issue Management
+- Create, edit, delete issues
+- View issue details (modal)
+- Filter by status and priority
+- Search by title/description
+- Pagination with metadata
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 📁 Project Management
+- Create and list projects
+- Project details page (`/projects/:id`)
+- View issues per project
+- Dynamic issue count per project
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🧭 Application Structure
+- Multi-page architecture:
+  - `/dashboard` → overview
+  - `/issues` → issue management
+  - `/projects` → project management
+  - `/projects/:id` → project details
+- Shared layout with sidebar navigation
+- Reusable components (modals, buttons, layout)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🛠️ Tech Stack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Backend
+- ASP.NET Core Web API
+- Entity Framework Core
+- SQL Server
+- JWT Authentication
+- Swagger (API testing)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Frontend
+- React (Vite + TypeScript)
+- Tailwind CSS
+- React Router
+- Fetch API (service-based architecture)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## 🧱 Architecture
+
+### Backend
+- Controllers → API endpoints
+- Services → business logic
+- DTOs → data shaping
+- Models → database entities
+
+### Frontend
+- Pages → route-based views
+- Components → reusable UI
+- Services → API calls (centralized)
+- Layout → shared UI structure
+
+---
+
+## 📊 Key Improvements (Recent)
+
+- Refactored app into multi-route structure
+- Introduced Layout with sidebar navigation
+- Separated Issues and Projects into dedicated pages
+- Implemented Project Details page with dynamic issue loading
+- Centralized API logic using service layer
+- Improved UI hierarchy and user experience
+
+---
+
+## ⚙️ Setup
+
+### Backend
+
+```bash
+git clone https://github.com/YuniorAlex2/BugTracker.API
+cd BugTracker.API
+dotnet ef database update
+dotnet run
