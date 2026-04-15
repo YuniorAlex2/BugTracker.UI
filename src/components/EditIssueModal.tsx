@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
-import { createIssue } from "../services/issueService";
-import type { CreateIssueRequest } from "../services/issueService";
 import { getProjects } from "../services/projectService";
 import type { Project } from "../services/projectService";
+import { updateIssue } from "../services/issueService";
+import type { Issue, UpdateIssueRequest } from "../services/issueService";
 
-type CreateIssueModalProps = {
+type EditIssueModalProps = {
   isOpen: boolean;
+  issue: Issue | null;
   onClose: () => void;
-  onCreated: () => void;
+  onUpdated: () => void;
 };
 
-function CreateIssueModal({
+function EditIssueModal({
   isOpen,
+  issue,
   onClose,
-  onCreated,
-}: CreateIssueModalProps) {
-  const [formData, setFormData] = useState<CreateIssueRequest>({
+  onUpdated,
+}: EditIssueModalProps) {
+  const [formData, setFormData] = useState<UpdateIssueRequest>({
     title: "",
     description: "",
     status: "Pending",
@@ -30,22 +32,25 @@ function CreateIssueModal({
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (!isOpen || !issue) return;
+
+    setFormData({
+      title: issue.title,
+      description: issue.description,
+      status: issue.status,
+      priority: issue.priority,
+      projectId: issue.projectId,
+    });
+  }, [isOpen, issue]);
+
+  useEffect(() => {
     if (!isOpen) return;
 
     async function loadProjects() {
       try {
         setLoadingProjects(true);
-        setError("");
-
-        const projectsData = await getProjects();
-        setProjects(projectsData);
-
-        if (projectsData.length > 0) {
-          setFormData((prev) => ({
-            ...prev,
-            projectId: projectsData[0].id,
-          }));
-        }
+        const data = await getProjects();
+        setProjects(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load projects.");
       } finally {
@@ -70,40 +75,29 @@ function CreateIssueModal({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    if (!formData.projectId) {
-      setError("Please select a project.");
-      return;
-    }
+    if (!issue) return;
 
     try {
       setSubmitting(true);
       setError("");
 
-      await createIssue(formData);
-      onCreated();
+      await updateIssue(issue.id, formData);
+      onUpdated();
       onClose();
-
-      setFormData({
-        title: "",
-        description: "",
-        status: "Pending",
-        priority: "Medium",
-        projectId: projects.length > 0 ? projects[0].id : 0,
-      });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to create issue.");
+      setError(err instanceof Error ? err.message : "Failed to update issue.");
     } finally {
       setSubmitting(false);
     }
   }
 
-  if (!isOpen) return null;
+  if (!isOpen || !issue) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
       <div className="w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl">
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-white">Create Issue</h2>
+          <h2 className="text-xl font-semibold text-white">Edit Issue</h2>
           <button
             onClick={onClose}
             className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-800 hover:text-white"
@@ -185,8 +179,6 @@ function CreateIssueModal({
             >
               {loadingProjects ? (
                 <option value={0}>Loading projects...</option>
-              ) : projects.length === 0 ? (
-                <option value={0}>No projects available</option>
               ) : (
                 projects.map((project) => (
                   <option key={project.id} value={project.id}>
@@ -208,10 +200,10 @@ function CreateIssueModal({
 
             <button
               type="submit"
-              disabled={submitting || loadingProjects || projects.length === 0}
+              disabled={submitting}
               className="rounded-lg bg-cyan-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:opacity-50"
             >
-              {submitting ? "Creating..." : "Create Issue"}
+              {submitting ? "Saving..." : "Save Changes"}
             </button>
           </div>
         </form>
@@ -220,4 +212,4 @@ function CreateIssueModal({
   );
 }
 
-export default CreateIssueModal;
+export default EditIssueModal;
