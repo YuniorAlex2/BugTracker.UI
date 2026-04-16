@@ -1,3 +1,5 @@
+import EditProjectModal from "../components/EditProjectModal";
+import DeleteProjectModal from "../components/DeleteProjectModal";
 import { useCallback, useEffect, useState } from "react";
 import { FolderKanban, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -10,6 +12,8 @@ function formatDate(dateString: string) {
 }
 
 function ProjectsPage() {
+  const [projectToEdit, setProjectToEdit] = useState<Project | null>(null);
+  const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [issueCounts, setIssueCounts] = useState<Record<number, number>>({});
   const [loading, setLoading] = useState(true);
@@ -80,6 +84,26 @@ function ProjectsPage() {
         }}
       />
 
+      <EditProjectModal
+        isOpen={!!projectToEdit}
+        project={projectToEdit}
+        onClose={() => setProjectToEdit(null)}
+        onUpdated={() => {
+          setProjectToEdit(null);
+          loadProjects();
+        }}
+      />
+
+      <DeleteProjectModal
+        isOpen={!!projectToDelete}
+        project={projectToDelete}
+        onClose={() => setProjectToDelete(null)}
+        onDeleted={() => {
+          setProjectToDelete(null);
+          loadProjects();
+        }}
+      />
+
       {loading ? (
         <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-slate-300">
           Loading projects...
@@ -116,6 +140,27 @@ function ProjectsPage() {
               <div className="flex items-center justify-between border-t border-slate-800 pt-4 text-sm text-slate-500">
                 <span>Created: {formatDate(project.createdAt)}</span>
                 <span>{issueCounts[project.id] ?? 0} issues</span>
+              </div>
+              <div className="mt-4 flex gap-3">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setProjectToEdit(project);
+                  }}
+                  className="text-xs text-yellow-400 hover:underline"
+                >
+                  Edit
+                </button>
+
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setProjectToDelete(project);
+                  }}
+                  className="text-xs text-rose-400 hover:underline"
+                >
+                  Delete
+                </button>
               </div>
             </Link>
           ))}

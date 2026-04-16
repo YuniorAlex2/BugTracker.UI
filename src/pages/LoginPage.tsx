@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { login } from "../services/authService";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -14,7 +15,12 @@ function LoginPage() {
 
     try {
       setError("");
-      await login(email, password);
+
+      await login({
+        email,
+        password,
+      });
+
       navigate("/"); // redirect to dashboard
     } catch {
       setError("Invalid email or password");
@@ -29,9 +35,7 @@ function LoginPage() {
       >
         <h2 className="text-2xl font-bold mb-6">Login</h2>
 
-        {error && (
-          <p className="text-red-400 mb-4">{error}</p>
-        )}
+        {error && <p className="text-red-400 mb-4">{error}</p>}
 
         <input
           type="email"
@@ -52,6 +56,15 @@ function LoginPage() {
         <button className="w-full bg-cyan-500 py-2 rounded font-semibold">
           Login
         </button>
+        <p className="mt-4 text-sm text-slate-400">
+          Don&apos;t have an account?{" "}
+          <Link
+            to="/register"
+            className="font-medium text-cyan-400 transition hover:text-cyan-300"
+          >
+            Sign up
+          </Link>
+        </p>
       </form>
     </div>
   );
