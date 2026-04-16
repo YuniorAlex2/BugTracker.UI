@@ -130,5 +130,18 @@ Create issue from project page
 Improve dashboard analytics
 Deployment (frontend + backend)
 
+## 🚧 Latest Updates
+
+- Implemented full **Project CRUD (Create, Edit, Delete)**
+- Added **Project Details page** with dynamic issue loading
+- Refactored frontend into a **multi-page architecture**
+- Introduced **Layout with sidebar navigation**
+- Centralized API calls using service layer (clean separation of concerns)
+- Implemented **JWT Authentication flow (Register & Login)**
+- Added **protected routes** with authentication guard
+- Improved UI consistency across Issues and Projects modules
+
+This project now reflects a real-world full stack application structure, including authentication, routing, and scalable data flow between frontend and backend.
+
 👨‍💻 Author
 Alex Suero
