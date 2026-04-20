@@ -17,7 +17,7 @@ function Layout() {
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 sm:py-6 lg:flex-row lg:gap-6">
-        <aside className="w-full rounded-2xl border border-slate-800 bg-slate-900 p-4 lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:w-64 lg:flex-shrink-0">
+        <aside className="flex min-h-[70vh] w-full flex-col rounded-2xl border border-slate-800 bg-slate-900 p-4 lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:w-64 lg:shrink-0">
           <div className="mb-4 lg:mb-6">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">
               Bug Tracker
@@ -42,7 +42,7 @@ function Layout() {
             </Link>
           </nav>
 
-          <div className="mt-4 border-t border-slate-800 pt-4 lg:mt-auto">
+          <div className="mt-auto border-t border-slate-800 pt-4">
             <LogoutButton />
           </div>
         </aside>
