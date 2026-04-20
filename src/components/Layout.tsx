@@ -16,16 +16,16 @@ function Layout() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
-      <div className="mx-auto flex max-w-7xl gap-6 px-6 py-6">
-        <aside className="sticky top-6 flex h-[calc(100vh-3rem)] w-64 flex-col rounded-2xl border border-slate-800 bg-slate-900 p-4">
-          <div className="mb-6">
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 sm:py-6 lg:flex-row lg:gap-6">
+        <aside className="w-full rounded-2xl border border-slate-800 bg-slate-900 p-4 lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:w-64 lg:flex-shrink-0">
+          <div className="mb-4 lg:mb-6">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">
               Bug Tracker
             </p>
-            <h1 className="mt-2 text-2xl font-bold">Workspace</h1>
+            <h1 className="mt-2 text-xl font-bold sm:text-2xl">Workspace</h1>
           </div>
 
-          <nav className="space-y-2">
+          <nav className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-1">
             <Link to="/" className={getLinkClasses("/")}>
               <LayoutDashboard size={18} />
               Dashboard
@@ -42,12 +42,12 @@ function Layout() {
             </Link>
           </nav>
 
-          <div className="mt-auto border-t border-slate-800 pt-4">
+          <div className="mt-4 border-t border-slate-800 pt-4 lg:mt-auto">
             <LogoutButton />
           </div>
         </aside>
 
-        <main className="flex-1">
+        <main className="min-w-0 flex-1">
           <Outlet />
         </main>
       </div>
